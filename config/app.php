@@ -19,6 +19,13 @@ return [
      *
      * 'default-command' => App\Commands\HelloCommand::class,
     */
+    'commands' => [
+        App\Commands\FetchImageMetadata::class,
+        App\Commands\DownloadImages::class,
+        App\Commands\NormalizeImages::class,
+        App\Commands\PrepareDataset::class,
+        App\Commands\CreateFreshDataset::class
+    ],
 
     /*
      * If true, development commands won't be available as the app
