@@ -13,20 +13,7 @@ return [
     |
     */
 
-    'default' => 'local',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Cloud Filesystem Disk
-    |--------------------------------------------------------------------------
-    |
-    | Many applications store files both locally and in the cloud. For this
-    | reason, you may specify a default "cloud" driver here. This driver
-    | will be bound as the Cloud disk implementation in the container.
-    |
-    */
-
-    'cloud' => 's3',
+    'default' => 'dataset',
 
     /*
     |--------------------------------------------------------------------------
@@ -44,28 +31,8 @@ return [
     'disks' => [
         'dataset' => [
             'driver' => 'local',
-            'root' => getcwd() . DIRECTORY_SEPARATOR . 'dataset2',
-        ],
-
-        'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-        ],
-
-        'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'visibility' => 'public',
-        ],
-
-        's3' => [
-            'driver' => 's3',
-            'key' => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
-        ],
-
+            'root' => getcwd() . DIRECTORY_SEPARATOR . 'dataset',
+        ]
     ],
 
 ];
