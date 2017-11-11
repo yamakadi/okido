@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\DataDirectory;
-use App\Pokédex;
+use App\Pokedex;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
             return new DataDirectory();
         });
 
-        $this->app->singleton(Pokédex::class, function ($app) {
-            return new Pokédex(config('pokédex.properties'), config('pokédex.data'));
+        $this->app->singleton(Pokedex::class, function ($app) {
+            return new Pokedex(config('pokedex.properties'), config('pokedex.data'));
         });
 
     }

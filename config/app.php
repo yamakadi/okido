@@ -7,11 +7,11 @@ return [
     /*
      * Here goes the application name.
      */
-    'name' => 'オーキド博士',
+    'name' => 'Professor Oak',
     /*
      * Here goes the application version.
      */
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     /*
      * Here goes the application default command. By default
      * the list of commands will appear. All commands
@@ -24,7 +24,7 @@ return [
      * If true, development commands won't be available as the app
      * will be in the production environment.
      */
-    'production' => true,
+    'production' => false,
     /*
      * If true, scheduler commands will be available.
      */

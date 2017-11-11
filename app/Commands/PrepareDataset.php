@@ -3,7 +3,7 @@
 namespace App\Commands;
 
 use App\DataDirectory;
-use App\Pokédex;
+use App\Pokedex;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Collection;
 use LaravelZero\Framework\Commands\Command;
@@ -16,9 +16,9 @@ class PrepareDataset extends Command
     private $files;
 
     /**
-     * @var \App\Pokédex
+     * @var \App\Pokedex
      */
-    private $pokédex;
+    private $pokedex;
     /**
      * The name and signature of the console command.
      *
@@ -41,7 +41,7 @@ class PrepareDataset extends Command
         parent::__construct();
 
         $this->files = app(DataDirectory::class);
-        $this->pokédex = app(Pokédex::class);
+        $this->pokedex = app(Pokedex::class);
 
     }
 
@@ -74,10 +74,10 @@ class PrepareDataset extends Command
             $this->output->progressAdvance();
 
             return $images->map(function ($path, $index) use ($labelIndexes) {
-                $pokédexNo = (int)$this->pokédexNo($path);
-                $pokémon = $this->pokédex->get($pokédexNo);
+                $pokedexNo = (int)$this->pokedexNo($path);
+                $pokemon = $this->pokedex->get($pokedexNo);
 
-                if (!$pokémon) {
+                if (!$pokemon) {
                     return null;
                 }
 
@@ -85,17 +85,17 @@ class PrepareDataset extends Command
 
                 return [
                     'index' => $index,
-                    'name' => (int)$labelIndexes->get('name')->get($pokémon->get('name')),
-                    'number' => (int)$pokémon->get('pokedex_number'),
-                    'generation' => (int)$pokémon->get('generation'),
-                    'type_one' => (int)$labelIndexes->get('type')->get($pokémon->get('type1', 'missing')),
-                    'type_two' => (int)$labelIndexes->get('type')->get($pokémon->get('type2', 'missing')),
+                    'name' => (int)$labelIndexes->get('name')->get($pokemon->get('name')),
+                    'number' => (int)$pokemon->get('pokedex_number'),
+                    'generation' => (int)$pokemon->get('generation'),
+                    'type_one' => (int)$labelIndexes->get('type')->get($pokemon->get('type1', 'missing')),
+                    'type_two' => (int)$labelIndexes->get('type')->get($pokemon->get('type2', 'missing')),
                     'classification' => (int)$labelIndexes->get('classification')
-                        ->get($pokémon->get('classification', 'missing')),
-                    'hp' => (int)$pokémon->get('hp', -1),
-                    'height' => (float)$pokémon->get('height_m', -1),
-                    'weight' => (float)$pokémon->get('weight_kg', -1),
-                    'legendary' => (int)$pokémon->get('is_legendary'),
+                        ->get($pokemon->get('classification', 'missing')),
+                    'hp' => (int)$pokemon->get('hp', -1),
+                    'height' => (float)$pokemon->get('height_m', -1),
+                    'weight' => (float)$pokemon->get('weight_kg', -1),
+                    'legendary' => (int)$pokemon->get('is_legendary'),
                     'path' => $path,
                 ];
             });
@@ -116,7 +116,7 @@ class PrepareDataset extends Command
         $this->comment('Completed!');
     }
 
-    private function pokédexNo(string $path): ?string
+    private function pokedexNo(string $path): ?string
     {
         $matches = [];
 
@@ -134,7 +134,7 @@ class PrepareDataset extends Command
         return collect(config('sources.label_indexes'))->map(function ($fields) {
             return collect($fields)->map(function ($field) {
 
-                return $this->pokédex->pluck($field);
+                return $this->pokedex->pluck($field);
 
             })->flatten()->unique()->sort()->map(function ($value) {
                 if (!$value) {
